@@ -1,0 +1,8 @@
+{
+  "name": "Light Slider Card Card",
+  "content_in_root": false,
+  "filename": "light-slider-card.js",
+  "render_readme": true,
+  "homeassistant": "2024.1.0",
+  "version": "1.2.2"
+}

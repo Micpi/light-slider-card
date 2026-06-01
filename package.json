@@ -1,0 +1,11 @@
+{
+  "name": "light-slider-card",
+  "version": "1.2.2",
+  "private": true,
+  "description": "Light Slider Card for Home Assistant with visual editor",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs');fs.mkdirSync('dist',{recursive:true});fs.copyFileSync('light-slider-card.js','dist/light-slider-card.js');console.log('dist/light-slider-card.js generated');\"",
+    "watch": "node -e \"console.log('Watch mode: use your editor/terminal watcher tooling for this card.');\""
+  },
+  "license": "MIT"
+}
