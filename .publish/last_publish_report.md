@@ -1,8 +1,8 @@
 # Publish Report
 
-- Date: 2026-07-20 12:44:28
-- Version: v1.3.0
-- Commit message: feat(card): add title row global power button v1.3.0
+- Date: 2026-07-20 12:51:03
+- Version: v1.3.1
+- Commit message: feat(card): add text label to global power button v1.3.1
 
 ## Changed files
 

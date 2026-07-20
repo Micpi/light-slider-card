@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.1 - 2026-07-20
+
+- feat(card): show `Allumé` or `Éteint` text on the title-row global power button
+- fix(card): use Home Assistant theme colors for power icons
+
 ## v1.3.0 - 2026-07-20
 
 - feat(card): add a title-row global power button to turn all configured lights on or off

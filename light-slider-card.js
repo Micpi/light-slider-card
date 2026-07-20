@@ -723,17 +723,22 @@ class LightSliderCard extends HTMLElement {
     const entityIds = this._getAvailableEntityIds()
     const anyOn = this._hasAnyLightOn(entityIds)
     const label = anyOn ? "Éteindre toutes les lumières" : "Allumer toutes les lumières"
+    const stateLabel = anyOn ? "Allumé" : "Éteint"
+    const text = button.querySelector(".all-power-label")
 
     button.classList.toggle("on", anyOn)
     button.disabled = entityIds.length === 0
     button.title = label
     button.setAttribute("aria-label", label)
+    button.setAttribute("aria-pressed", anyOn ? "true" : "false")
+    if (text) text.textContent = stateLabel
   }
 
   _renderTitleRow() {
     const entityIds = this._getAvailableEntityIds()
     const anyOn = this._hasAnyLightOn(entityIds)
     const label = anyOn ? "Éteindre toutes les lumières" : "Allumer toutes les lumières"
+    const stateLabel = anyOn ? "Allumé" : "Éteint"
     const disabled = entityIds.length === 0 ? "disabled" : ""
     const title = this._config.title
       ? `<div class="card-title">${this._esc(this._config.title)}</div>`
@@ -742,8 +747,9 @@ class LightSliderCard extends HTMLElement {
     return `
       <div class="card-title-row">
         ${title}
-        <button class="all-power-btn ${anyOn ? "on" : ""}" title="${label}" aria-label="${label}" ${disabled}>
+        <button class="all-power-btn ${anyOn ? "on" : ""}" title="${label}" aria-label="${label}" aria-pressed="${anyOn ? "true" : "false"}" ${disabled}>
           <ha-icon icon="mdi:power"></ha-icon>
+          <span class="all-power-label">${stateLabel}</span>
         </button>
       </div>
     `
@@ -794,6 +800,7 @@ class LightSliderCard extends HTMLElement {
           min-height: 32px;
         }
         .card-title {
+          flex: 1;
           font-size: 18px;
           font-weight: 600;
           color: var(--primary-text-color, #fff);
@@ -806,8 +813,9 @@ class LightSliderCard extends HTMLElement {
           flex: 1;
         }
         .all-power-btn {
-          flex: 0 0 32px;
-          width: 32px;
+          flex: 0 0 auto;
+          min-width: 88px;
+          width: auto;
           height: 32px;
           border: none;
           outline: none;
@@ -815,7 +823,9 @@ class LightSliderCard extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 50%;
+          gap: 6px;
+          border-radius: 8px;
+          padding: 0 10px;
           background: rgba(255,255,255,0.07);
           transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.12s ease;
           position: relative;
@@ -830,22 +840,33 @@ class LightSliderCard extends HTMLElement {
           transition: opacity 0.25s ease;
         }
         .all-power-btn.on {
-          background: rgba(255, 152, 0, var(--lsc-on-opacity));
-          background: color-mix(in srgb, var(--lsc-on-color) 55%, transparent);
+          background: rgba(var(--rgb-primary-color, 3, 169, 244), 0.14);
+          background: color-mix(in srgb, var(--state-light-active-color, var(--primary-color, #03a9f4)) 16%, transparent);
         }
         .all-power-btn.on::before {
-          background: var(--lsc-on-color);
-          opacity: var(--lsc-on-opacity);
+          background: var(--state-light-active-color, var(--primary-color, #03a9f4));
+          opacity: 0.12;
         }
         .all-power-btn ha-icon {
           --mdc-icon-size: 20px;
-          color: var(--secondary-text-color, #666);
+          color: var(--primary-color, #03a9f4);
           transition: color 0.25s ease, filter 0.25s ease;
           z-index: 1;
         }
+        .all-power-label {
+          color: var(--primary-text-color, #fff);
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 1;
+          white-space: nowrap;
+          z-index: 1;
+        }
         .all-power-btn.on ha-icon {
-          color: #ffcc02;
-          filter: drop-shadow(0 0 6px rgba(255, 204, 2, 0.6));
+          color: var(--state-light-active-color, var(--primary-color, #03a9f4));
+          filter: none;
+        }
+        .all-power-btn.on .all-power-label {
+          color: var(--state-light-active-color, var(--primary-color, #03a9f4));
         }
         .all-power-btn:active {
           transform: scale(0.94);
@@ -1017,8 +1038,8 @@ class LightSliderCard extends HTMLElement {
           z-index: 1;
         }
         .power-btn.on ha-icon {
-          color: #ffcc02;
-          filter: drop-shadow(0 0 6px rgba(255, 204, 2, 0.6));
+          color: var(--state-light-active-color, var(--primary-color, #03a9f4));
+          filter: none;
         }
         .power-btn:active {
           transform: scale(0.94);
@@ -1059,9 +1080,10 @@ class LightSliderCard extends HTMLElement {
                         font-size: 16px;
                     }
                     .all-power-btn {
-                        flex-basis: 30px;
-                        width: 30px;
+                        min-width: 82px;
+                        width: auto;
                         height: 30px;
+                        padding: 0 8px;
                     }
                     .light-row {
                         margin-bottom: ${this._config.mobile_slider_gap}px;
@@ -1328,7 +1350,7 @@ window.customCards.push({
 })
 
 console.info(
-  "%c LIGHT-SLIDER-CARD %c v1.3.0 ",
+  "%c LIGHT-SLIDER-CARD %c v1.3.1 ",
   "color: #fff; background: #ff9800; font-weight: bold; padding: 2px 6px; border-radius: 4px 0 0 4px;",
   "color: #ff9800; background: #1c1c1e; font-weight: bold; padding: 2px 6px; border-radius: 0 4px 4px 0;"
 )

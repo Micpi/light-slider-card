@@ -18,7 +18,7 @@ Ajustez l'intensité et l'état de vos luminaires avec un rendu compact et lisib
 ## ✨ Points forts
 
 - controle rapide d une ou plusieurs lumieres
-- bouton global dans la ligne de titre pour allumer ou eteindre toutes les lumieres de la carte
+- bouton global dans la ligne de titre avec l'etat `Allumé` / `Éteint`
 - slider fluide avec retour visuel immediat
 - mode dimmer ou toggle par entite
 - configuration visuelle disponible dans Lovelace
@@ -165,7 +165,7 @@ Clés disponibles par entité :
 ## Fonctionnement
 
 - **Glisser** sur le bargraphe pour régler la luminosité
-- **Cliquer** sur le bouton ⏻ du titre pour allumer toutes les lumières si elles sont éteintes, ou tout éteindre si au moins une est allumée
+- **Cliquer** sur le bouton `Allumé` / `Éteint` du titre pour allumer toutes les lumières si elles sont éteintes, ou tout éteindre si au moins une est allumée
 - **Cliquer** sur le bouton ⏻ en bout de barre pour allumer/éteindre
 - Mettre la luminosité à 0 éteint automatiquement la lumière
 - En mode `toggle`, cliquer sur la barre agit comme un bouton ON/OFF
