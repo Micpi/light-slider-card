@@ -1,16 +1,21 @@
-# Light Slider Card
+<div align="center">
 
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Lovelace-41BDF5?style=for-the-badge&logo=home-assistant&logoColor=white)](https://www.home-assistant.io/)
-[![HACS](https://img.shields.io/badge/HACS-Custom%20Card-41BDF5?style=for-the-badge)](https://hacs.xyz)
-[![Version](https://img.shields.io/badge/Version-v1.2.1-0EA5E9?style=for-the-badge)](https://github.com/Micpi/light-slider-card)
-[![Type](https://img.shields.io/badge/Type-Lighting%20Card-0284C7?style=for-the-badge)](https://github.com/Micpi/light-slider-card)
+# 💡 Light Slider Card — Home Assistant Card
+
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://hacs.xyz)
+[![HA Version](https://img.shields.io/badge/Home%20Assistant-2024.1%2B-blue?style=for-the-badge&logo=home-assistant)](https://www.home-assistant.io)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/github/v/release/Micpi/light-slider-card?style=for-the-badge&label=Version)](https://github.com/Micpi/light-slider-card/releases/latest)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/mickaelpila)
 
-Carte Lovelace personnalisée pour Home Assistant — contrôle de lumière avec bargraphe + bouton power.
+**Carte Lovelace dédiée au contrôle rapide des lumières dans Home Assistant.**  
+Ajustez l'intensité et l'état de vos luminaires avec un rendu compact et lisible.
+
+</div>
 
 ---
 
-## Points forts
+## ✨ Points forts
 
 - controle rapide d une ou plusieurs lumieres
 - slider fluide avec retour visuel immediat
@@ -18,7 +23,7 @@ Carte Lovelace personnalisée pour Home Assistant — contrôle de lumière avec
 - configuration visuelle disponible dans Lovelace
 - presentation compacte adaptee au mobile
 
-## Installation
+## 📦 Installation
 
 1. Copier `light-slider-card.js` dans `/config/www/`
 2. Ajouter la ressource dans Home Assistant :
@@ -26,7 +31,7 @@ Carte Lovelace personnalisée pour Home Assistant — contrôle de lumière avec
    - Ajouter : `/local/light-slider-card.js` — Type : **Module JavaScript**
 3. Recharger la page (Ctrl+F5)
 
-## Utilisation
+## 🧪 Utilisation
 
 ### Configuration minimale
 
@@ -70,6 +75,8 @@ slider_padding: 16
 show_percentage: true
 live_update: false
 label_position: above
+background_style: default
+background_blur: 18
 card_background: "var(--ha-card-background)"
 
 # Compact mobile
@@ -81,7 +88,7 @@ mobile_slider_padding: 12
 mobile_icon_size: "21px"
 ```
 
-## Options
+## 🧭 Options
 
 - `entity` (défaut: —): Entité lumière unique.
 - `entities` (défaut: —): Liste d'entités lumière (`string` ou objet).
@@ -91,13 +98,15 @@ mobile_icon_size: "21px"
 - `bar_opacity` (défaut: `0.85`): Opacité de la barre ON (0 à 1).
 - `height` (défaut: `48`): Hauteur du slider (px).
 - `border_radius` (défaut: `14`): Arrondi des coins (px).
+- `background_style` (défaut: `default`): `default`, `transparent`, `gradient`, `blur`, `glass` ou `custom`.
+- `background_blur` (défaut: `18`): Force de flou utilisée par les modes `blur` et `glass`.
+- `card_background` (défaut: `var(--ha-card-background)`): Fond CSS personnalisé utilisé si `background_style: custom`.
 - `icon_size` (défaut: `24px`): Taille de l'icône desktop.
 - `slider_gap` (défaut: `14`): Espacement vertical entre sliders (px).
 - `slider_padding` (défaut: `16`): Padding horizontal de la carte (px).
 - `show_percentage` (défaut: `true`): Afficher le pourcentage/état.
 - `live_update` (défaut: `false`): Envoie les changements pendant le glissement.
 - `label_position` (défaut: `above`): `above` ou `inside` (dans la barre).
-- `card_background` (défaut: `var(--ha-card-background)`): Fond de la carte.
 - `compact_mobile` (défaut: `true`): Active le mode compact mobile.
 - `compact_breakpoint` (défaut: `560`): Largeur max (px) pour activer le mode compact.
 - `mobile_height` (défaut: `height - 8`, min 36): Hauteur du slider en mode compact.
@@ -105,7 +114,25 @@ mobile_icon_size: "21px"
 - `mobile_slider_padding` (défaut: `slider_padding - 4`, min 8): Padding horizontal en mode compact.
 - `mobile_icon_size` (défaut: `icon_size - 3`): Taille de l'icône en mode compact.
 
-## Options par entité (`entities`)
+### Exemples de fond
+
+```yaml
+# Fond transparent
+background_style: transparent
+
+# Fond dégradé doux
+background_style: gradient
+
+# Glassmorphism avec flou réglable
+background_style: glass
+background_blur: 24
+
+# Fond CSS entièrement personnalisé
+background_style: custom
+card_background: "linear-gradient(145deg, rgba(0,0,0,0.55), rgba(0,0,0,0.20))"
+```
+
+## 🧭 Options par entité (`entities`)
 
 Chaque entrée de `entities` peut être :
 
@@ -142,6 +169,6 @@ Clés disponibles par entité :
 - laissez `live_update: false` si vous voulez limiter les appels pendant le glissement
 - gardez `compact_mobile` active sur smartphone pour une carte plus dense
 
-## Editeur
+## 🛠️ Editeur
 
 La carte peut etre ajoutee depuis le picker Lovelace puis ajustee visuellement avant une finition YAML si necessaire.

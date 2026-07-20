@@ -285,6 +285,13 @@ class LightSliderCardEditor extends HTMLElement {
       title: this._config.title || "",
       height: this._config.height || 48,
       border_radius: this._config.border_radius || 14,
+      background_style:
+        this._config.background_style || (this._config.card_background ? "custom" : "default"),
+      background_blur:
+        this._config.background_blur !== undefined ? this._config.background_blur : 18,
+      card_background:
+        this._config.card_background ||
+        "var(--ha-card-background, var(--card-background-color, #1c1c1e))",
       bar_color: this._config.bar_color || "",
       bar_color_off: this._config.bar_color_off || "",
       bar_opacity: this._config.bar_opacity !== undefined ? this._config.bar_opacity : 0.85,
@@ -308,6 +315,10 @@ class LightSliderCardEditor extends HTMLElement {
       title: "",
       height: "Défaut : 48 px",
       border_radius: "Défaut : 14 px",
+      background_style:
+        "Choisissez un rendu de fond prêt à l'emploi ou utilisez un fond CSS personnalisé",
+      background_blur: "Défaut : 18 px (utilisé pour Blur et Glass)",
+      card_background: "Utilisé uniquement si le mode est Personnalisé",
       bar_color: "Défaut : linear-gradient(90deg, #ff9800, #ffcc02)",
       bar_color_off: "Défaut : #3a3a3a",
       bar_opacity: "Défaut : 0.85 (0 = transparent, 1 = opaque)",
@@ -345,6 +356,28 @@ class LightSliderCardEditor extends HTMLElement {
           },
         ],
       },
+      {
+        name: "background_style",
+        selector: {
+          select: {
+            options: [
+              { value: "default", label: "Standard" },
+              { value: "transparent", label: "Transparent" },
+              { value: "gradient", label: "Dégradé" },
+              { value: "blur", label: "Flou" },
+              { value: "glass", label: "Glassmorphism" },
+              { value: "custom", label: "Personnalisé (CSS)" },
+            ],
+          },
+        },
+      },
+      {
+        name: "background_blur",
+        selector: {
+          number: { min: 0, max: 60, step: 1, unit_of_measurement: "px", mode: "slider" },
+        },
+      },
+      { name: "card_background", selector: { text: {} } },
       {
         name: "",
         type: "grid",
@@ -426,6 +459,9 @@ class LightSliderCardEditor extends HTMLElement {
       title: "Titre de la carte",
       height: "Hauteur du slider",
       border_radius: "Arrondi des coins",
+      background_style: "Mode de fond",
+      background_blur: "Flou du fond",
+      card_background: "Fond personnalisé CSS",
       bar_color: "Couleur barre ON (CSS)",
       bar_color_off: "Couleur barre OFF",
       bar_opacity: "Opacité barre ON",
@@ -451,6 +487,11 @@ class LightSliderCardEditor extends HTMLElement {
       for (const [k, v] of Object.entries(d)) {
         if (v === "" || v === undefined) delete updated[k]
         else updated[k] = v
+      }
+      if (updated.background_style !== "custom") {
+        delete updated.card_background
+      } else if (!updated.card_background) {
+        updated.card_background = "var(--ha-card-background, var(--card-background-color, #1c1c1e))"
       }
       this._config = updated
       this._fire()
@@ -492,6 +533,8 @@ class LightSliderCard extends HTMLElement {
     const mobileIconSize = Number.isFinite(parsedIconSize)
       ? `${Math.max(16, parsedIconSize - 3)}${iconUnit}`
       : baseIconSize
+    const backgroundStyle =
+      config.background_style || (config.card_background ? "custom" : "default")
 
     this._config = {
       title: config.title || "",
@@ -507,9 +550,11 @@ class LightSliderCard extends HTMLElement {
       show_percentage: config.show_percentage !== false,
       live_update: config.live_update || false,
       label_position: config.label_position || "above",
+      background_style: backgroundStyle,
       card_background:
         config.card_background ||
         "var(--ha-card-background, var(--card-background-color, #1c1c1e))",
+      background_blur: config.background_blur !== undefined ? config.background_blur : 18,
       compact_mobile: config.compact_mobile !== false,
       compact_breakpoint: config.compact_breakpoint || 560,
       mobile_height: config.mobile_height || Math.max(36, baseHeight - 8),
@@ -579,6 +624,41 @@ class LightSliderCard extends HTMLElement {
     return d.innerHTML
   }
 
+  _resolveCardBackground() {
+    const defaultBackground = "var(--ha-card-background, var(--card-background-color, #1c1c1e))"
+    const blurAmount = Number.isFinite(Number(this._config.background_blur))
+      ? Number(this._config.background_blur)
+      : 18
+    const style =
+      this._config.background_style || (this._config.card_background ? "custom" : "default")
+
+    switch (style) {
+      case "transparent":
+        return { background: "transparent" }
+      case "gradient":
+        return {
+          background: "linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03))",
+        }
+      case "blur":
+        return {
+          background: "rgba(16, 24, 39, 0.52)",
+          backdropFilter: `blur(${blurAmount}px) saturate(130%)`,
+        }
+      case "glass":
+        return {
+          background: "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+          backdropFilter: `blur(${blurAmount}px) saturate(145%)`,
+        }
+      case "custom":
+        return {
+          background: this._config.card_background || defaultBackground,
+        }
+      case "default":
+      default:
+        return { background: defaultBackground }
+    }
+  }
+
   /** Mise à jour légère (pas de reconstruction DOM) */
   _update() {
     this._config.entities.forEach((entry, idx) => {
@@ -622,6 +702,7 @@ class LightSliderCard extends HTMLElement {
     }
 
     const entities = this._config.entities
+    const cardBackground = this._resolveCardBackground()
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -629,16 +710,18 @@ class LightSliderCard extends HTMLElement {
           display: block;
         }
         ha-card {
-                    --lsc-on-color: ${this._config.bar_color};
-                    --lsc-off-color: ${this._config.bar_color_off};
-                    --lsc-on-opacity: ${this._config.bar_opacity};
-                    --lsc-icon-size: ${this._config.icon_size};
+          --lsc-on-color: ${this._config.bar_color};
+          --lsc-off-color: ${this._config.bar_color_off};
+          --lsc-on-opacity: ${this._config.bar_opacity};
+          --lsc-icon-size: ${this._config.icon_size};
           padding: 16px ${this._config.slider_padding}px;
-          background: ${this._config.card_background};
+          background: ${cardBackground.background};
+          ${cardBackground.backdropFilter ? `backdrop-filter: ${cardBackground.backdropFilter};` : ""}
+          ${cardBackground.backdropFilter ? `-webkit-backdrop-filter: ${cardBackground.backdropFilter};` : ""}
           border-radius: 16px;
           overflow: hidden;
-                    border: 1px solid var(--divider-color, rgba(127,127,127,0.3));
-                    border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);
+          border: 1px solid var(--divider-color, rgba(127,127,127,0.3));
+          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);
         }
         .card-title {
           font-size: 18px;
@@ -684,7 +767,7 @@ class LightSliderCard extends HTMLElement {
           justify-content: center;
         }
         .light-icon ha-icon {
-                    --mdc-icon-size: var(--lsc-icon-size);
+          --mdc-icon-size: var(--lsc-icon-size);
           color: var(--secondary-text-color, #aaa);
         }
         .light-icon.on ha-icon {
@@ -1090,7 +1173,7 @@ window.customCards.push({
 })
 
 console.info(
-  "%c LIGHT-SLIDER-CARD %c v1.2.0 ",
+  "%c LIGHT-SLIDER-CARD %c v1.2.3 ",
   "color: #fff; background: #ff9800; font-weight: bold; padding: 2px 6px; border-radius: 4px 0 0 4px;",
   "color: #ff9800; background: #1c1c1e; font-weight: bold; padding: 2px 6px; border-radius: 0 4px 4px 0;"
 )
