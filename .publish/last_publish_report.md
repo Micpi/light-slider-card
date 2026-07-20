@@ -1,8 +1,8 @@
 # Publish Report
 
-- Date: 2026-07-20 11:44:45
-- Version: v1.2.8
-- Commit message: fix(card): render frameless wrapper when show_frame is false v1.2.8
+- Date: 2026-07-20 11:50:01
+- Version: v1.2.9
+- Commit message: fix(card): preserve show_frame in normalized config v1.2.9
 
 ## Changed files
 

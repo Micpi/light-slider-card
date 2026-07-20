@@ -559,6 +559,7 @@ class LightSliderCard extends HTMLElement {
         config.card_background ||
         "var(--ha-card-background, var(--card-background-color, #1c1c1e))",
       background_blur: config.background_blur !== undefined ? config.background_blur : 18,
+      show_frame: config.show_frame !== false,
       compact_mobile: config.compact_mobile !== false,
       compact_breakpoint: config.compact_breakpoint || 560,
       mobile_height: config.mobile_height || Math.max(36, baseHeight - 8),
@@ -660,29 +661,6 @@ class LightSliderCard extends HTMLElement {
       case "default":
       default:
         return { background: defaultBackground }
-    }
-  }
-
-  _applyCardFrameStyle() {
-    const card = this.shadowRoot?.querySelector("ha-card")
-    if (!card) return
-
-    if (this._config.show_frame === false) {
-      card.style.setProperty("--ha-card-border-width", "0px", "important")
-      card.style.setProperty("--ha-card-border-color", "transparent", "important")
-      card.style.setProperty("--ha-card-box-shadow", "none", "important")
-      card.style.setProperty("--ha-card-background", "transparent", "important")
-      card.style.setProperty("border", "0", "important")
-      card.style.setProperty("outline", "0", "important")
-      card.style.setProperty("box-shadow", "none", "important")
-    } else {
-      card.style.removeProperty("--ha-card-border-width")
-      card.style.removeProperty("--ha-card-border-color")
-      card.style.removeProperty("--ha-card-box-shadow")
-      card.style.removeProperty("--ha-card-background")
-      card.style.removeProperty("border")
-      card.style.removeProperty("outline")
-      card.style.removeProperty("box-shadow")
     }
   }
 
@@ -950,7 +928,8 @@ class LightSliderCard extends HTMLElement {
                   this._config.compact_mobile
                     ? `
                 @media (max-width: ${this._config.compact_breakpoint}px) {
-                    ha-card {
+                    ha-card,
+                    .lsc-card {
                         padding: 12px ${this._config.mobile_slider_padding}px;
                     }
                     .card-title {
@@ -986,8 +965,6 @@ class LightSliderCard extends HTMLElement {
         ${entities.map((entry, idx) => this._renderEntity(entry, idx)).join("")}
       ${cardTagEnd}
     `
-
-    this._applyCardFrameStyle()
 
     // Bind events after rendering
     entities.forEach((entry, idx) => {
@@ -1208,7 +1185,7 @@ window.customCards.push({
 })
 
 console.info(
-  "%c LIGHT-SLIDER-CARD %c v1.2.3 ",
+  "%c LIGHT-SLIDER-CARD %c v1.2.9 ",
   "color: #fff; background: #ff9800; font-weight: bold; padding: 2px 6px; border-radius: 4px 0 0 4px;",
   "color: #ff9800; background: #1c1c1e; font-weight: bold; padding: 2px 6px; border-radius: 0 4px 4px 0;"
 )

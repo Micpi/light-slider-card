@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.9 - 2026-07-20
+
+- fix(card): preserve `show_frame` in normalized config so the frameless wrapper is actually rendered
+- fix(card): apply compact mobile padding to the frameless wrapper
+
 ## v1.2.3 - 2026-07-20
 
 - feat(card): add background presets for transparent, gradient, blur, glass, and custom CSS backgrounds
