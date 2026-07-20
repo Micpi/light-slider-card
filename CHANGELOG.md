@@ -25,4 +25,13 @@
 - changed: package-lock.json
 - changed: package.json
 
+## v1.2.5 - 2026-07-20
+
+- feat(card): add frame toggle to light-slider-card v1.2.5
+- changed: README.md
+- changed: hacs.json
+- changed: light-slider-card.js
+- changed: package-lock.json
+- changed: package.json
+
 

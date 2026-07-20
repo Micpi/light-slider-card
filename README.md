@@ -78,6 +78,7 @@ label_position: above
 background_style: default
 background_blur: 18
 card_background: "var(--ha-card-background)"
+show_frame: true
 
 # Compact mobile
 compact_mobile: true
@@ -101,6 +102,7 @@ mobile_icon_size: "21px"
 - `background_style` (défaut: `default`): `default`, `transparent`, `gradient`, `blur`, `glass` ou `custom`.
 - `background_blur` (défaut: `18`): Force de flou utilisée par les modes `blur` et `glass`.
 - `card_background` (défaut: `var(--ha-card-background)`): Fond CSS personnalisé utilisé si `background_style: custom`.
+- `show_frame` (défaut: `true`): Affiche ou non le cadre de la carte.
 - `icon_size` (défaut: `24px`): Taille de l'icône desktop.
 - `slider_gap` (défaut: `14`): Espacement vertical entre sliders (px).
 - `slider_padding` (défaut: `16`): Padding horizontal de la carte (px).
@@ -130,6 +132,9 @@ background_blur: 24
 # Fond CSS entièrement personnalisé
 background_style: custom
 card_background: "linear-gradient(145deg, rgba(0,0,0,0.55), rgba(0,0,0,0.20))"
+
+# Carte sans cadre
+show_frame: false
 ```
 
 ## 🧭 Options par entité (`entities`)

@@ -292,6 +292,7 @@ class LightSliderCardEditor extends HTMLElement {
       card_background:
         this._config.card_background ||
         "var(--ha-card-background, var(--card-background-color, #1c1c1e))",
+      show_frame: this._config.show_frame !== false,
       bar_color: this._config.bar_color || "",
       bar_color_off: this._config.bar_color_off || "",
       bar_opacity: this._config.bar_opacity !== undefined ? this._config.bar_opacity : 0.85,
@@ -334,6 +335,7 @@ class LightSliderCardEditor extends HTMLElement {
       mobile_slider_gap: "Espacement entre sliders en mode compact",
       mobile_slider_padding: "Marge gauche / droite en mode compact",
       mobile_icon_size: "Taille icône en mode compact (ex: 21px)",
+      show_frame: "Afficher le cadre de la carte",
     }
     appForm.schema = [
       { name: "title", selector: { text: {} } },
@@ -378,6 +380,7 @@ class LightSliderCardEditor extends HTMLElement {
         },
       },
       { name: "card_background", selector: { text: {} } },
+      { name: "show_frame", selector: { boolean: {} } },
       {
         name: "",
         type: "grid",
@@ -462,6 +465,7 @@ class LightSliderCardEditor extends HTMLElement {
       background_style: "Mode de fond",
       background_blur: "Flou du fond",
       card_background: "Fond personnalisé CSS",
+      show_frame: "Afficher le cadre",
       bar_color: "Couleur barre ON (CSS)",
       bar_color_off: "Couleur barre OFF",
       bar_opacity: "Opacité barre ON",
@@ -703,6 +707,7 @@ class LightSliderCard extends HTMLElement {
 
     const entities = this._config.entities
     const cardBackground = this._resolveCardBackground()
+    const showFrame = this._config.show_frame !== false
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -720,8 +725,7 @@ class LightSliderCard extends HTMLElement {
           ${cardBackground.backdropFilter ? `-webkit-backdrop-filter: ${cardBackground.backdropFilter};` : ""}
           border-radius: 16px;
           overflow: hidden;
-          border: 1px solid var(--divider-color, rgba(127,127,127,0.3));
-          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);
+          ${showFrame ? "--ha-card-border-width: 1px;\n          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);\n          box-shadow: var(--ha-card-box-shadow, none);" : "--ha-card-border-width: 0;\n          border: none;\n          box-shadow: none;"}
         }
         .card-title {
           font-size: 18px;

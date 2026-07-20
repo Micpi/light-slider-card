@@ -1,12 +1,11 @@
 # Publish Report
 
-- Date: 2026-07-20 11:26:55
-- Version: v1.2.4
-- Commit message: feat(card): add customizable background styles v1.2.4
+- Date: 2026-07-20 11:32:22
+- Version: v1.2.5
+- Commit message: feat(card): add frame toggle to light-slider-card v1.2.5
 
 ## Changed files
 
-- CHANGELOG.md
 - README.md
 - hacs.json
 - light-slider-card.js
