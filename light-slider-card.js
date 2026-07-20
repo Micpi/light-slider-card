@@ -725,7 +725,7 @@ class LightSliderCard extends HTMLElement {
           ${cardBackground.backdropFilter ? `-webkit-backdrop-filter: ${cardBackground.backdropFilter};` : ""}
           border-radius: 16px;
           overflow: hidden;
-          ${showFrame ? "--ha-card-border-width: 1px;\n          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);\n          box-shadow: var(--ha-card-box-shadow, none);" : "--ha-card-border-width: 0;\n          border: none;\n          box-shadow: none;"}
+          ${showFrame ? "--ha-card-border-width: 1px;\n          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);\n          box-shadow: var(--ha-card-box-shadow, none);" : "--ha-card-border-width: 0px !important;\n          --ha-card-box-shadow: none !important;\n          border: 0 !important;\n          outline: 0 !important;\n          box-shadow: none !important;"}
         }
         .card-title {
           font-size: 18px;

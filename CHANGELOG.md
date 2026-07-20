@@ -34,4 +34,12 @@
 - changed: package-lock.json
 - changed: package.json
 
+## v1.2.6 - 2026-07-20
+
+- fix(card): fully remove frame when disabled v1.2.6
+- changed: hacs.json
+- changed: light-slider-card.js
+- changed: package-lock.json
+- changed: package.json
+
 

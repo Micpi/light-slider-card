@@ -1,12 +1,11 @@
 # Publish Report
 
-- Date: 2026-07-20 11:32:22
-- Version: v1.2.5
-- Commit message: feat(card): add frame toggle to light-slider-card v1.2.5
+- Date: 2026-07-20 11:38:02
+- Version: v1.2.6
+- Commit message: fix(card): fully remove frame when disabled v1.2.6
 
 ## Changed files
 
-- README.md
 - hacs.json
 - light-slider-card.js
 - package-lock.json
