@@ -731,13 +731,16 @@ class LightSliderCard extends HTMLElement {
     const entities = this._config.entities
     const cardBackground = this._resolveCardBackground()
     const showFrame = this._config.show_frame !== false
+    const cardTagStart = showFrame ? "<ha-card>" : '<div class="lsc-card lsc-card--frameless">'
+    const cardTagEnd = showFrame ? "</ha-card>" : "</div>"
 
     this.shadowRoot.innerHTML = `
       <style>
         :host {
           display: block;
         }
-        ha-card {
+        ha-card,
+        .lsc-card {
           --lsc-on-color: ${this._config.bar_color};
           --lsc-off-color: ${this._config.bar_color_off};
           --lsc-on-opacity: ${this._config.bar_opacity};
@@ -748,7 +751,10 @@ class LightSliderCard extends HTMLElement {
           ${cardBackground.backdropFilter ? `-webkit-backdrop-filter: ${cardBackground.backdropFilter};` : ""}
           border-radius: 16px;
           overflow: hidden;
-          ${showFrame ? "--ha-card-border-width: 1px;\n          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);\n          box-shadow: var(--ha-card-box-shadow, none);" : "--ha-card-border-width: 0px !important;\n          --ha-card-box-shadow: none !important;\n          border: 0 !important;\n          outline: 0 !important;\n          box-shadow: none !important;"}
+          ${showFrame ? "--ha-card-border-width: 1px;\n          border: 1px solid color-mix(in srgb, var(--divider-color, rgba(127,127,127,0.3)) 65%, transparent);\n          box-shadow: var(--ha-card-box-shadow, none);" : "border: 0;\n          outline: 0;\n          box-shadow: none;"}
+        }
+        .lsc-card--frameless {
+          display: block;
         }
         .card-title {
           font-size: 18px;
@@ -975,10 +981,10 @@ class LightSliderCard extends HTMLElement {
                     : ""
                 }
       </style>
-      <ha-card>
+      ${cardTagStart}
         ${this._config.title ? `<div class="card-title">${this._esc(this._config.title)}</div>` : ""}
         ${entities.map((entry, idx) => this._renderEntity(entry, idx)).join("")}
-      </ha-card>
+      ${cardTagEnd}
     `
 
     this._applyCardFrameStyle()

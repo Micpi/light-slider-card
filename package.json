@@ -1,6 +1,6 @@
 {
   "name": "light-slider-card",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "private": true,
   "description": "Light Slider Card for Home Assistant with visual editor",
   "scripts": {

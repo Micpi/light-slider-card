@@ -50,4 +50,12 @@
 - changed: package-lock.json
 - changed: package.json
 
+## v1.2.8 - 2026-07-20
+
+- fix(card): render frameless wrapper when show_frame is false v1.2.8
+- changed: hacs.json
+- changed: light-slider-card.js
+- changed: package-lock.json
+- changed: package.json
+
 

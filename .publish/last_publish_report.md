@@ -1,8 +1,8 @@
 # Publish Report
 
-- Date: 2026-07-20 11:41:14
-- Version: v1.2.7
-- Commit message: fix(card): force frame removal on ha-card v1.2.7
+- Date: 2026-07-20 11:44:45
+- Version: v1.2.8
+- Commit message: fix(card): render frameless wrapper when show_frame is false v1.2.8
 
 ## Changed files
 
