@@ -42,4 +42,12 @@
 - changed: package-lock.json
 - changed: package.json
 
+## v1.2.7 - 2026-07-20
+
+- fix(card): force frame removal on ha-card v1.2.7
+- changed: hacs.json
+- changed: light-slider-card.js
+- changed: package-lock.json
+- changed: package.json
+
 

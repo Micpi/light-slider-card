@@ -663,6 +663,29 @@ class LightSliderCard extends HTMLElement {
     }
   }
 
+  _applyCardFrameStyle() {
+    const card = this.shadowRoot?.querySelector("ha-card")
+    if (!card) return
+
+    if (this._config.show_frame === false) {
+      card.style.setProperty("--ha-card-border-width", "0px", "important")
+      card.style.setProperty("--ha-card-border-color", "transparent", "important")
+      card.style.setProperty("--ha-card-box-shadow", "none", "important")
+      card.style.setProperty("--ha-card-background", "transparent", "important")
+      card.style.setProperty("border", "0", "important")
+      card.style.setProperty("outline", "0", "important")
+      card.style.setProperty("box-shadow", "none", "important")
+    } else {
+      card.style.removeProperty("--ha-card-border-width")
+      card.style.removeProperty("--ha-card-border-color")
+      card.style.removeProperty("--ha-card-box-shadow")
+      card.style.removeProperty("--ha-card-background")
+      card.style.removeProperty("border")
+      card.style.removeProperty("outline")
+      card.style.removeProperty("box-shadow")
+    }
+  }
+
   /** Mise à jour légère (pas de reconstruction DOM) */
   _update() {
     this._config.entities.forEach((entry, idx) => {
@@ -957,6 +980,8 @@ class LightSliderCard extends HTMLElement {
         ${entities.map((entry, idx) => this._renderEntity(entry, idx)).join("")}
       </ha-card>
     `
+
+    this._applyCardFrameStyle()
 
     // Bind events after rendering
     entities.forEach((entry, idx) => {
