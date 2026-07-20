@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0 - 2026-07-20
+
+- feat(card): add a title-row global power button to turn all configured lights on or off
+
 ## v1.2.9 - 2026-07-20
 
 - fix(card): preserve `show_frame` in normalized config so the frameless wrapper is actually rendered
